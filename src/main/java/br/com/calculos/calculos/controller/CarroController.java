@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/carros")
@@ -27,7 +28,7 @@ public class CarroController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String>delete(@PathVariable int id){
+    public ResponseEntity<String>delete(@PathVariable Long id){
         try{
             String mensagem=this.carroService.delete(id);
             return new ResponseEntity<String>(mensagem, HttpStatus.OK);
@@ -37,7 +38,7 @@ public class CarroController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Carro>findById(@PathVariable int id){
+    public ResponseEntity<Carro>findById(@PathVariable Long id){
         try{
             Carro carro=this.carroService.findById(id);
             return new ResponseEntity<>(carro, HttpStatus.OK);
@@ -47,9 +48,9 @@ public class CarroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Carro> update(@PathVariable int id, @RequestBody Carro carro2){
+    public ResponseEntity<Optional<Carro>> update(@PathVariable Long id, @RequestBody Carro carro2){
         try {
-            Carro carro= this.carroService.update(id,carro2);
+            Optional<Carro> carro= this.carroService.update(id,carro2);
             return ResponseEntity.ok(carro);
         } catch (Exception e) {
             return null;
